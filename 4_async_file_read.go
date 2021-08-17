@@ -48,25 +48,25 @@ func handleIndex(rw http.ResponseWriter, r *http.Request) {
 	rw.Write([]byte("Hello World !!!"))
 }
 
-func handleFile(rw http.ResponseWriter, r *http.Request) {
+// func handleFile(rw http.ResponseWriter, r *http.Request) {
 
-	fd, err := getFileDetails(r.URL.Path[1:])
+// 	fd, err := getFileDetails(r.URL.Path[1:])
 
-	if err == FileDoesNotExist {
-		rw.WriteHeader(http.StatusNotFound)
-		rw.Write([]byte(FileDoesNotExist.Error()))
-		return
-	}
+// 	if err == FileDoesNotExist {
+// 		rw.WriteHeader(http.StatusNotFound)
+// 		rw.Write([]byte(FileDoesNotExist.Error()))
+// 		return
+// 	}
 
-	if err != nil {
-		rw.WriteHeader(http.StatusInternalServerError)
-		rw.Write([]byte("Some error occured"))
-		return
-	}
+// 	if err != nil {
+// 		rw.WriteHeader(http.StatusInternalServerError)
+// 		rw.Write([]byte("Some error occured"))
+// 		return
+// 	}
 
-	rw.Write([]byte(fd))
+// 	rw.Write([]byte(fd))
 
-}
+// }
 
 func handleFileAsync(rw http.ResponseWriter, r *http.Request) {
 
@@ -95,31 +95,31 @@ func handleFileAsync(rw http.ResponseWriter, r *http.Request) {
 
 }
 
-func getFileDetails(f string) ([]byte, error) {
+// func getFileDetails(f string) ([]byte, error) {
 
-	//NOTE :: We can cache the file in memory / use templates instead of getting it every time for faster load
+// 	//NOTE :: We can cache the file in memory / use templates instead of getting it every time for faster load
 
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		log.Println(err)
-		return []byte{}, err
-	}
+// 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+// 	if err != nil {
+// 		log.Println(err)
+// 		return []byte{}, err
+// 	}
 
-	fp := dir + "/views/" + f //Absolute File Path
+// 	fp := dir + "/views/" + f //Absolute File Path
 
-	if _, err := os.Stat(fp); os.IsNotExist(err) {
-		return []byte{}, FileDoesNotExist
-	}
+// 	if _, err := os.Stat(fp); os.IsNotExist(err) {
+// 		return []byte{}, FileDoesNotExist
+// 	}
 
-	fileDetails, err := os.ReadFile(fp)
-	if err != nil {
-		log.Println(err)
-		return []byte{}, err
-	}
+// 	fileDetails, err := os.ReadFile(fp)
+// 	if err != nil {
+// 		log.Println(err)
+// 		return []byte{}, err
+// 	}
 
-	return fileDetails, nil
+// 	return fileDetails, nil
 
-}
+// }
 
 func getFileDetailsAsync(f string, c chan fileData) {
 
